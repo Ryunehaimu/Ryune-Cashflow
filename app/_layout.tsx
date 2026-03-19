@@ -17,7 +17,7 @@ import 'react-native-reanimated';
 import { auth } from '../firebaseConfig';
 import '../global.css';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useColorScheme } from 'nativewind';
 
 const { width } = Dimensions.get('window');
 
@@ -66,7 +66,7 @@ function FloatingTabBar({
 }
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>

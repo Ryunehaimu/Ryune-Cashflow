@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, RefreshControl, ActivityIndicator, Platform, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { useColorScheme } from 'nativewind';
 import { Link } from 'expo-router';
 import { Calendar } from 'lucide-react-native';
 import { auth } from '../../firebaseConfig';
@@ -19,6 +20,7 @@ export default function DashboardScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [showChart, setShowChart] = useState(false);
   const [hideBalance, setHideBalance] = useState(true);
+  const { colorScheme, setColorScheme } = useColorScheme();
   
   // Custom Month Filter State
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -96,6 +98,28 @@ export default function DashboardScreen() {
         contentContainerStyle={{ paddingBottom: 150 }}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); loadData(); }} tintColor="#000" />}
       >
+        {/* Top Header Bar */}
+        <View className="flex-row justify-between items-center mb-10 mt-2">
+          <Text className="text-2xl font-black text-black dark:text-white tracking-tighter">RyuneCFlow</Text>
+          <View className="flex-row items-center gap-3">
+             <TouchableOpacity 
+                onPress={() => setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')}
+                className="w-10 h-10 rounded-full bg-white dark:bg-[#1c1c1e] items-center justify-center shadow-sm border border-gray-100 dark:border-[#2c2c2e]"
+              >
+                <Ionicons 
+                  name={colorScheme === 'dark' ? "sunny" : "moon"} 
+                  size={20} 
+                  color={colorScheme === 'dark' ? "#fbbf24" : "#6366f1"} 
+                />
+              </TouchableOpacity>
+              
+              <View className="w-10 h-10 rounded-full bg-blue-600 items-center justify-center shadow-md">
+                <Text className="text-white font-black text-lg">
+                  {(auth.currentUser?.displayName?.[0] || auth.currentUser?.email?.[0] || 'U').toUpperCase()}
+                </Text>
+              </View>
+          </View>
+        </View>
 
         <View className="flex-row justify-between items-center mb-6 px-1">
           <Text className="text-xl font-bold text-black dark:text-white tracking-tight">Ringkasan Bulan</Text>
