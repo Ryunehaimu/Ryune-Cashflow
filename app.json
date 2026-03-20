@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "RyuneCashflow",
-    "slug": "RyuneCashflow",
+    "slug": "ryune-cashflow",
     "version": "1.3.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -19,7 +19,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.ryunehaimu123.ryunecashflow"
     },
     "web": {
       "output": "static",
@@ -52,7 +53,7 @@
       "typedRoutes": true,
       "reactCompiler": true
     },
-    "owner": "ryunehaimu",
+    "owner": "ryunehaimu123",
     "extra": {
       "eas": {
         "projectId": "c48bfe20-9799-474c-8a14-47ca163455d8"
