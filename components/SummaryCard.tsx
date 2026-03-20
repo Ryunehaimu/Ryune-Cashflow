@@ -317,17 +317,17 @@ export function SummaryCard({
       {/* Action Buttons Footer */}
       <View className="flex-row gap-3 px-6 pb-6 pt-2">
         <Link href="/(tabs)/add" asChild>
-          <TouchableOpacity className="flex-1 bg-blue-600 py-4 rounded-[100px] flex-row justify-center items-center shadow-lg shadow-blue-500/20">
+          <TouchableOpacity className="flex-1 bg-blue-600 py-4 rounded-2xl flex-row justify-center items-center shadow-md shadow-blue-500/20">
             <Ionicons name="add" size={20} color="#fff" />
-            <Text className="text-white font-bold text-[15px] ml-2">Add Money</Text>
+            <Text className="text-white font-bold text-base ml-2">Add Money</Text>
           </TouchableOpacity>
         </Link>
         <TouchableOpacity
           onPress={() => auth.signOut()}
-          className="flex-1 bg-[#1c1c1e] dark:bg-[#222] py-4 rounded-[100px] flex-row justify-center items-center shadow-sm"
+          className="flex-1 bg-gray-100 dark:bg-[#222] py-4 rounded-2xl flex-row justify-center items-center shadow-sm"
         >
-          <Ionicons name="log-out-outline" size={18} color="#fff" />
-          <Text className="text-white font-bold text-[15px] ml-2">Logout</Text>
+          <Ionicons name="log-out-outline" size={18} color="#ef4444" />
+          <Text className="text-red-500 font-bold text-base ml-2">Logout</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -92,8 +92,8 @@ export default function WalletDetailsScreen() {
     return (
       <View className="flex-1 justify-center items-center bg-[#fafafa] dark:bg-[#0a0a0a]">
         <Text className="text-black dark:text-white font-bold text-lg">Wallet not found.</Text>
-        <TouchableOpacity onPress={() => router.back()} className="mt-4 px-6 py-3 bg-black dark:bg-white rounded-full">
-          <Text className="text-white dark:text-black font-bold">Go Back</Text>
+        <TouchableOpacity onPress={() => router.back()} className="mt-4 px-8 py-4 bg-blue-600 rounded-2xl shadow-lg shadow-blue-500/30">
+          <Text className="text-white font-bold text-base">Halaman Utama</Text>
         </TouchableOpacity>
       </View>
     );
