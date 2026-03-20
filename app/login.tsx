@@ -46,8 +46,8 @@ export default function LoginScreen() {
         <View className="flex-1 px-8 justify-center pb-20 mt-10" style={{ minHeight: height * 0.8 }}>
           
           {/* Logo / Icon */}
-          <View className="w-16 h-16 bg-black dark:bg-white rounded-[20px] items-center justify-center mb-10 shadow-xl shadow-black/10">
-            <Ionicons name="card" size={30} color={isLogin ? "white" : "black"} className="dark:color-black" />
+          <View className="w-16 h-16 bg-blue-600 rounded-[20px] items-center justify-center mb-10 shadow-xl shadow-blue-500/20">
+            <Ionicons name="wallet" size={32} color="white" />
           </View>
 
           {/* Typography */}
@@ -82,7 +82,7 @@ export default function LoginScreen() {
             <TouchableOpacity 
               onPress={handleAuth}
               disabled={loading}
-              className="bg-black dark:bg-white py-4 rounded-2xl items-center shadow-lg shadow-black/20"
+              className="bg-blue-600 dark:bg-white py-4 rounded-2xl items-center shadow-lg shadow-blue-500/30"
             >
               {loading ? (
                 <ActivityIndicator color="#fff" />

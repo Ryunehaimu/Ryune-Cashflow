@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, ActivityIndicator, Alert, SafeAreaView, Platform, StatusBar } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { useFocusEffect } from 'expo-router';
 import { auth } from '../../firebaseConfig';
 import { getWallets, addWallet, deleteWallet, Wallet } from '../../services/firestore';
 
@@ -24,9 +25,11 @@ export default function WalletsScreen() {
     setBalance(formatCurrency(text));
   };
 
-  useEffect(() => {
-    loadWallets();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadWallets();
+    }, [])
+  );
 
   const loadWallets = async () => {
     if (!auth.currentUser) return;
@@ -130,9 +133,9 @@ export default function WalletsScreen() {
           <TouchableOpacity 
             onPress={handleAddWallet}
             disabled={adding}
-            className="bg-black dark:bg-white py-4 rounded-2xl items-center shadow-md shadow-black/20"
+            className="bg-blue-600 py-4 rounded-2xl items-center shadow-md shadow-blue-500/20 mt-2"
           >
-            {adding ? <ActivityIndicator color="#fff" /> : <Text className="text-white dark:text-black font-bold text-base">Add Wallet</Text>}
+            {adding ? <ActivityIndicator color="#fff" /> : <Text className="text-white font-bold text-base">Add Wallet</Text>}
           </TouchableOpacity>
         </View>
 

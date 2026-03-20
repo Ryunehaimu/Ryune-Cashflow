@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, RefreshControl, ActivityIndicator, Platform, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useColorScheme } from 'nativewind';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
+import { useFocusEffect } from 'expo-router';
 import { Calendar } from 'lucide-react-native';
 import { auth } from '../../firebaseConfig';
 import { getWallets, getTransactions, Wallet, Transaction } from '../../services/firestore';
@@ -21,6 +22,7 @@ export default function DashboardScreen() {
   const [showChart, setShowChart] = useState(false);
   const [hideBalance, setHideBalance] = useState(true);
   const { colorScheme, setColorScheme } = useColorScheme();
+  const router = useRouter();
   
   // Custom Month Filter State
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -41,9 +43,11 @@ export default function DashboardScreen() {
     }
   };
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      loadData();
+    }, [])
+  );
 
   useEffect(() => {
     const targetMonth = selectedDate.getMonth();
@@ -100,7 +104,7 @@ export default function DashboardScreen() {
       >
         {/* Top Header Bar */}
         <View className="flex-row justify-between items-center mb-10 mt-2">
-          <Text className="text-2xl font-black text-black dark:text-white tracking-tighter">RyuneCFlow</Text>
+          <Text className="text-2xl font-black text-blue-600 dark:text-white tracking-tighter">RyuneCFlow</Text>
           <View className="flex-row items-center gap-3">
              <TouchableOpacity 
                 onPress={() => setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')}
@@ -113,16 +117,20 @@ export default function DashboardScreen() {
                 />
               </TouchableOpacity>
               
-              <View className="w-10 h-10 rounded-full bg-blue-600 items-center justify-center shadow-md">
+              <TouchableOpacity 
+                activeOpacity={0.8}
+                onPress={() => router.push('/profile')}
+                className="w-10 h-10 rounded-full bg-blue-600 items-center justify-center shadow-md"
+              >
                 <Text className="text-white font-black text-lg">
                   {(auth.currentUser?.displayName?.[0] || auth.currentUser?.email?.[0] || 'U').toUpperCase()}
                 </Text>
-              </View>
+              </TouchableOpacity>
           </View>
         </View>
 
         <View className="flex-row justify-between items-center mb-6 px-1">
-          <Text className="text-xl font-bold text-black dark:text-white tracking-tight">Ringkasan Bulan</Text>
+          <Text className="text-xl font-bold text-gray-800 dark:text-white tracking-tight">Ringkasan Bulan</Text>
           <TouchableOpacity 
             onPress={() => setIsPickerVisible(true)}
             className="bg-white dark:bg-[#222] px-4 py-2 rounded-xl flex-row items-center shadow-sm border border-gray-100 dark:border-[#333]"

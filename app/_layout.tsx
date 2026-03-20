@@ -39,24 +39,44 @@ function FloatingTabBar({
   currentSegment: string;
   onNavigate: (name: string) => void;
 }) {
+  const { colorScheme } = useColorScheme();
+  const isDark = colorScheme === 'dark';
+
   return (
     <View style={styles.tabBarWrap} pointerEvents="box-none">
-      <View style={styles.tabBar}>
+      <View style={[
+        styles.tabBar, 
+        { 
+          backgroundColor: isDark ? '#1c1c1e' : '#ffffff', 
+          borderColor: isDark ? '#2c2c2e' : '#f3f4f6', 
+          borderWidth: 1,
+          shadowColor: isDark ? '#000' : '#2563eb',
+          shadowOpacity: isDark ? 0.3 : 0.1,
+        }
+      ]}>
         {TAB_ROUTES.map((tab: any) => {
           const isFocused = currentSegment === tab.segment;
+          const activeBg = isDark ? '#ffffff' : '#2563eb';
+          const inactiveBg = isDark ? '#2c2c2e' : '#f3f4f6';
+          const activeTint = isDark ? '#000000' : '#ffffff';
+          const inactiveTint = isDark ? '#8e8e93' : '#9ca3af';
+
           return (
             <TouchableOpacity
               key={tab.name}
               onPress={() => onNavigate(tab.name)}
               activeOpacity={0.8}
-              style={[styles.pill, isFocused ? styles.pillActive : styles.pillInactive]}
+              style={[
+                styles.pill, 
+                { backgroundColor: isFocused ? activeBg : inactiveBg, paddingHorizontal: isFocused ? 20 : 0, width: isFocused ? 'auto' : 48 }
+              ]}
             >
               <Ionicons
                 size={20}
                 name={isFocused ? tab.icon : tab.iconOutline}
-                color={isFocused ? '#000' : '#8e8e93'}
+                color={isFocused ? activeTint : inactiveTint}
               />
-              {isFocused && <Text style={styles.pillText}>{tab.label}</Text>}
+              {isFocused && <Text style={[styles.pillText, { color: activeTint }]}>{tab.label}</Text>}
             </TouchableOpacity>
           );
         })}
@@ -111,7 +131,7 @@ function RootContent() {
     if (initializing) return;
 
     const inAuthGroup =
-      segments[0] === '(tabs)' || segments[0] === 'wallet';
+      segments[0] === '(tabs)' || segments[0] === 'wallet' || segments[0] === 'profile';
 
     if (user && !inAuthGroup) {
       router.replace('/(tabs)');
@@ -131,6 +151,7 @@ function RootContent() {
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="login" />
         <Stack.Screen name="wallet/[id]" />
+        <Stack.Screen name="profile" />
       </Stack>
 
       {inTabs && (
@@ -154,13 +175,12 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: 'row',
-    backgroundColor: '#1c1c1e',
     borderRadius: 100,
     padding: 6,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOpacity: 0.35,
-    shadowRadius: 16,
+    shadowOpacity: 0.2,
+    shadowRadius: 15,
     shadowOffset: { width: 0, height: 8 },
     elevation: 10,
   },
@@ -172,17 +192,8 @@ const styles = StyleSheet.create({
     height: 48,
     marginHorizontal: 3,
   },
-  pillActive: {
-    backgroundColor: '#ffffff',
-    paddingHorizontal: 20,
-  },
-  pillInactive: {
-    width: 48,
-    backgroundColor: '#2c2c2e',
-  },
   pillText: {
     marginLeft: 8,
-    color: '#000000',
     fontWeight: '800',
     fontSize: 13,
     letterSpacing: -0.2,
